@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/todoScreen.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/screens/todo_screen.dart';
+import 'package:todo_app/theme/theme_notifier.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeNotifier(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       title: 'Todo App',
-      theme: ThemeData(primarySwatch: Colors.indigo),
+      debugShowCheckedModeBanner: false,
+      theme: themeProvider.currentTheme,
       home: const TodoScreen(),
     );
   }
